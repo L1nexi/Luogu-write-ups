@@ -46,10 +46,6 @@ void myQuickSort(int arr[], int first, int end)
     arr[first] = std::move(arr[left]);
     arr[left] = std::move(pivot);
 
-    // std::cout << arr[0];
-    // for (int i{1};i < 10;i++)
-    //     std::cout << ' ' << arr[i];
-    // std::cout << endl;
     myQuickSort(arr, first, left - 1);
     myQuickSort(arr, left + 1, end);
     return;
