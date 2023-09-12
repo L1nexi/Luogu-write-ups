@@ -33,3 +33,6 @@ void myQuickSort(int arr[], int first, int end)
     return;
 }
 ```
+
+##### P1024 一元三次方程求根
+本题利用二分法求近似解。由于限制了两个根之差大于 1 ，可以以 0.5 为间隔寻找符号改变时的自变量取值。
