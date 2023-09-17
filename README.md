@@ -36,3 +36,44 @@ void myQuickSort(int arr[], int first, int end)
 
 ##### P1024 一元三次方程求根
 本题利用二分法求近似解。由于限制了两个根之差大于 1 ，可以以 0.5 为间隔寻找符号改变时的自变量取值。
+
+##### P2678 跳石头
+注意到本题需求最小跳跃距离的最大值。即为 $max(mix(jumpLength))$，实际上，这就是要求 $jumpLength$ 的下确界,
+下确界为最大的下界。故可以利用二分法求解。对每一个下界，试图寻早比它更大的下界，直到找到最大的下界。
+```c++
+bool isOk(int arr[], int n, int m, int maxminjmp)
+{
+    int cnt{0};
+    int prev{0};
+    for(int i = 1;i <= n + 1;i++)
+    {
+        if (arr[i] - arr[prev] < maxminjmp)
+        {
+            ++cnt;
+        }
+        else
+        {
+            prev = i;
+        }
+    }
+    return cnt <= m;
+}
+```
+```c++
+    // left <= right，防止漏掉 left == right时候的解
+    while (left <= right)
+    {
+        if (isOk(arr, n, m, mid) == true)   // 为下界，尝试寻找更大的下界
+        {
+            ans = mid;
+            left = mid + 1;
+        }
+        else    //非下界
+        {
+            right = mid - 1;
+        }
+        mid = (left + right) / 2;
+    }
+    cout << ans;
+
+```
