@@ -39,7 +39,7 @@ void myQuickSort(int arr[], int first, int end)
 
 ##### P2678 跳石头
 注意到本题需求最小跳跃距离的最大值。即为 $max(mix(jumpLength))$，实际上，这就是要求 $jumpLength$ 的下确界,
-下确界为最大的下界。故可以利用二分法求解。对每一个下界，试图寻早比它更大的下界，直到找到最大的下界。
+下确界为最大的下界。故可以利用二分法求解。对每一个下界，试图寻找比它更大的下界，直到找到最大的下界。
 ```c++
 bool isOk(int arr[], int n, int m, int maxminjmp)
 {
@@ -76,4 +76,64 @@ bool isOk(int arr[], int n, int m, int maxminjmp)
     }
     cout << ans;
 
+```
+
+##### P1902 刺杀大使
+本题为考察二分法查找以及 BFS 搜索，这边详细叙述 DFS 搜索和 BFS 搜索
+DFS， Depth First Search， 深度优先搜索：DFS会尽量深的搜索某个分支，直到无法继续搜索或搜索完成，然后回溯到上一个节点，继续搜索其他分支。可以通过 Stack 和记录已搜索节点的数组来实现 DFS 搜索。
+BFS, Breadth First Search，广度优先搜索：BFS 不会一次性深入进入某个分支，而是将每个节点的分支都记录下来,在下一层的遍历中依次处理。可以用水源来比喻 BFS 的开始节点，存在通路的地方都会有水流入，直到搜索完成。
+```c++
+    // 二分查找
+    int left{0}, right{max};
+    int mid = (left + right ) / 2;
+    int ans = mid;
+    while (left <= right)
+    {
+        // 用 BFS 判断当前解是否成立
+        if (BFS(n, m, arr[0], isUsed[0], mid) == true)
+        {
+            ans = mid;
+            right = mid - 1;
+        }
+        else
+        {
+            left = mid + 1;
+        }
+        mid = (right + left) / 2;
+    }
+    cout << ans;
+
+```
+```c++
+bool BFS(int n, int m ,int *arr, int *isUsed, int maxHarm)
+{
+    std:queue<std::pair<int, int>> queue;
+    // 设置搜索开始的节点。 与DFS不同，BFS可以有多个开始节点
+    for(int x{}; x < m; ++x)
+    {
+        queue.emplace(x, 0);
+        isUsed[x] = 1;
+    }
+    // 如果还有没处理的节点，继续循环
+    while (queue.empty() == false)
+    {
+        auto tmp = queue.front();
+        queue.pop(); 
+        for(int k{};k < 4;++k)
+        {
+            int new_x = tmp.first + xMove[k];
+            int new_y = tmp.second + yMove[k];
+            // 如果没有越界、没有被访问过、满足搜索要求，则添加到下次搜索的队列中
+            if (inArea(new_x, new_y, m - 1, n - 1) == true && isUsed[new_y * m + new_x] == 0 && arr[new_y * m + new_x] <= maxHarm)
+            {
+                queue.emplace(new_x, new_y);
+                isUsed[new_y * m + new_x] = 1;
+            }
+        }
+    }
+    int tmp = isUsed[m * n - 1];
+    // 将 isUsed 数组清零
+    memset(isUsed, 0, m * n * sizeof(int));
+    return tmp;
+}
 ```
