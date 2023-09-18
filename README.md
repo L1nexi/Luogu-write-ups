@@ -139,3 +139,26 @@ bool BFS(int n, int m ,int *arr, int *isUsed, int maxHarm)
     return tmp;
 }
 ```
+##### P1226 「模板」快速幂 || 取余运算
+本题要求计算 $a^b\enspace mod \enspace p$。在不考虑取模的情况下，考虑 $a^b$
+我们可以注意到 $b$ 的二进制存储方式提供了天然的分解 $a^b$ 的方式:
+
+$$
+b \enspace = (d_{r-1}······d_1d_0)_2 \enspace = \sum_{i = 0}^{r - 1}2^i * d_i \\
+a^b = \enspace \prod_{i = 0}^{r - 1} a^{2 ^ i * d_i}
+$$
+同时有性质 $a^{2^{i + 1}} = a^{2 ^ i} * a^{2 ^ i}$，可以由低次向高次迭代。
+通过这种方式计算可以将时间复杂度降低为 $O(logn)$
+```c++
+    long long base = a % p; 
+    long long ans{1}; 
+    while (power > 0)
+    {
+        if (power & 0x1)
+        {
+        ans = (ans * base) % p;
+        }
+        base = (base * base) % p;
+        power >>= 1;
+    }
+```
