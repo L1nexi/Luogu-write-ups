@@ -143,10 +143,8 @@ bool BFS(int n, int m ,int *arr, int *isUsed, int maxHarm)
 本题要求计算 $a^b\enspace mod \enspace p$。在不考虑取模的情况下，考虑 $a^b$
 我们可以注意到 $b$ 的二进制存储方式提供了天然的分解 $a^b$ 的方式:
 
-$$
-b = (d_{r-1}······d_1d_0)_2 = \sum_{i = 0}^{r - 1}2^i * d_i
-a^b =\prod_{i = 0}^{r - 1} a^{2 ^ i * d_i}
-$$
+$$b = (d_{r-1}······d_1d_0)_2 = \sum_{i = 0}^{r - 1}2^i * d_i \\
+a^b =\prod_{i = 0}^{r - 1} a^{2 ^ i * d_i}$$
 
 同时有性质 $a^{2^{i + 1}} = a^{2 ^ i} * a^{2 ^ i}$，可以由低次向高次迭代。
 通过这种方式计算可以将时间复杂度降低为 $O(logn)$
