@@ -214,3 +214,23 @@ void outputIn2pow(int n)
     }
 }
 ```
+
+### P1208 Mixing Milk 
+本题为简单的贪心算法，难度不大。
+```c++
+    sort(arr, arr + m);
+    while (n > 0)
+    {
+        if (n >= arr[i].amount)
+        {
+            n -= arr[i].amount;
+            totp += arr[i].amount * arr[i].price;
+        }
+        else
+        {
+            totp += n * arr[i].price;
+            n = 0;
+        }
+        ++i;
+    }
+```
