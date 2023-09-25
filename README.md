@@ -238,12 +238,27 @@ void outputIn2pow(int n)
 ### P3131 Subsequences Summing to Sevens S
 本题主要考察前缀和与取模的性质。
 前缀和的核心思想是利用整体和求得部分和。
-一维情况： 定义 $Sum(k) = \sum_{i = 0}^{k} a_i$。
-则有 $\sum_{i = k + 1}^{k + p} a_i = Sum(k + p) - Sum(k)$
-二位情况： 定义 $ Sum(u,v) = \sum_{i = 0, j = 0}^{u, v} $
-则有 $ \sum_{i = k + 1, j = l + 1}^{k + p, l + m} = Sum(k+p, l+m) - Sum(k, l) $
+一维情况： 定义 
+$$
+Sum(k) = \sum_{i = 0}^{k} a_i
+$$。
+则有 
+$$
+\sum_{i = k + 1}^{k + p} a_i = Sum(k + p) - Sum(k)
+$$
+二位情况： 定义 
+$$ 
+Sum(u,v) = \sum_{i = 0, j = 0}^{u, v}
+$$
+则有 
+$$ 
+\sum_{i = k + 1, j = l + 1}^{k + p, l + m} = Sum(k+p, l+m) - Sum(k, l) 
+$$
 
-同时考虑取模性质： $(a + b) \enspace mod \enspace p = \left( (a \enspace mod \enspace p) + (b \enspace mod \enspace p) \right) mod \enspace p$
+同时考虑取模性质： 
+$$
+(a + b) \enspace mod \enspace p = \left( (a \enspace mod \enspace p) + (b \enspace mod \enspace p) \right) mod \enspace p
+$$
 
 ```C++
     for (int i{1}; i <= n; ++i)
