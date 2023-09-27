@@ -252,7 +252,7 @@ Sum(u,v) = \sum\limits_{i = 0, j = 0}^{u, v}
 $$
 则有 
 $$ 
-\sum\limits_{i = k + 1, j = l + 1}^{k + p, l + m} = Sum(k+p, l+m) - Sum(k, l) 
+\sum\limits_{i = k + 1, j = l + 1}^{k + p, l + m} = Sum(k+p, l+m) + Sum(k, l) - Sum(k, l+m) - Sum(k + p, l); 
 $$
 
 同时考虑取模性质： 
@@ -271,4 +271,26 @@ $$
             first[sum[i]] = i;
         }
     }
+```
+
+### P1387 最大正方形
+二维前缀和的例子。
+核心代码：
+```c++
+int arr[101][101] = {0};
+int sum[101][101] = {0};
+for(int i{1};i <= n; ++i)
+{
+    for (int j{1}, rowSum{}; j <= m;++j)
+    {
+        cin >> arr[i][j];
+        sum[i][j] = sum[i - 1][j] + rowSum + arr[i][j];
+        rowSum += arr[i][j];
+    }
+}
+// (x, y) 为要求的矩形的左上角的元素坐标
+inline int getRecSum(int sum[101][101], int length, int y, int x)
+{
+    return sum[y][x] + sum[y +length][x + length] - sum[y + length][x] - sum[y][x + length];
+}
 ```
